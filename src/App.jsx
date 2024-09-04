@@ -67,7 +67,7 @@ const App = () => {
         </div>
       </div>
       <AddAndUpdateContact isOpen={isOpen} onClose={onClose} />
-      <ToastContainer />
+      <ToastContainer position="bottom-right" />
     </>
   );
 };

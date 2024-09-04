@@ -4,6 +4,13 @@ import { useForm } from "react-hook-form";
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { toast } from "react-toastify";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const schemaValidation = z.object({
+  name: z.string(),
+  email: z.string().email("Invalid Email Address"),
+});
 const AddAndUpdateContact = ({ isOpen, onClose, isUpdate, contact }) => {
   const addContact = async (contact) => {
     try {
@@ -31,23 +38,20 @@ const AddAndUpdateContact = ({ isOpen, onClose, isUpdate, contact }) => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm(
-    isUpdate
+  } = useForm({
+    defaultValues: isUpdate
       ? {
-          defaultValues: {
-            name: contact.name,
-            email: contact.email,
-          },
+          name: contact.name,
+          email: contact.email,
         }
       : {
-          defaultValues: {
-            name: "",
-            email: "",
-          },
-        }
-  );
+          name: "",
+          email: "",
+        },
+    resolver: zodResolver(schemaValidation),
+  });
   const onSubmit = async (data) => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    await new Promise((resolve) => setTimeout(resolve, 200));
     isUpdate ? updateContact(data, contact.id) : addContact(data);
     reset();
     onClose();
