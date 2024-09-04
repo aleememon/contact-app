@@ -1,28 +1,25 @@
 import React from "react";
 import { createPortal } from "react-dom";
 import { IoMdClose } from "react-icons/io";
-
 const Modal = ({ onClose, isOpen, children }) => {
   return createPortal(
     <>
       {isOpen && (
-        <>
-          <div
-            className="fixed inset-0 z-40 bg-black bg-opacity-50 backdrop-blur-sm"
-            onClick={onClose}
-          ></div>
-          <div className="fixed inset-0 z-50 flex items-center justify-center">
-            <div className="relative bg-white rounded-lg shadow-lg p-5 max-w-[80%] md:max-w-[25%]">
-              <button
+        <div
+          onClick={onClose}
+          className="grid place-items-center backdrop-blur h-screen z-40 w-screen absolute top-0"
+        >
+          <div className="m-auto relative z-50 min-h-[200px] min-w-[80%] md:max-w-[25%] bg-white p-3">
+            <div className="flex justify-end">
+              <IoMdClose
                 onClick={onClose}
-                className="absolute top-3 right-3 text-2xl text-gray-600 hover:text-gray-800 focus:outline-none"
-              >
-                <IoMdClose />
-              </button>
-              <div className="mt-4">{children}</div>
+                className="text-2xl cursor-pointer"
+              />
             </div>
+            {children}
           </div>
-        </>
+          <div className="backdrop-blur h-screen z-40 w-screen absolute top-0" />
+        </div>
       )}
     </>,
     document.getElementById("modal-root")

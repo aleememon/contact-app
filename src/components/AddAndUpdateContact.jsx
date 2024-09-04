@@ -32,7 +32,7 @@ const AddAndUpdateContact = ({ isOpen, onClose, isUpdate, contact }) => {
     }
   };
 
-  console.log(contact);
+  
   const {
     register,
     handleSubmit,

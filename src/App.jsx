@@ -8,6 +8,7 @@ import AddAndUpdateContact from "./components/AddAndUpdateContact";
 import useDisclose from "./hooks/useDisclose";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import NoContactFound from "./components/NoContactFound";
 const App = () => {
   const [contacts, setContacts] = useState([]);
   const { isOpen, onClose, onOpen } = useDisclose();
@@ -61,13 +62,14 @@ const App = () => {
         <Navbar />
         <SearchBar filterContacts={filterContacts} onOpen={onOpen} />
         <div className="mt-4 flex flex-col gap-3">
-          {contacts.map((contact) => (
+          {contacts.length > 0 ? contacts.map((contact) => (
             <ContactCard key={contact.id} contact={contact} />
-          ))}
+          )) : <NoContactFound />}
         </div>
       </div>
       <AddAndUpdateContact isOpen={isOpen} onClose={onClose} />
       <ToastContainer position="bottom-right" />
+      
     </>
   );
 };
